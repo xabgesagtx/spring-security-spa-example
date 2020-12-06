@@ -28,7 +28,7 @@ public class CustomSecurityConfig {
                 .formLogin()
                     .loginPage("/api/login")
                     .authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED))
-                    .authenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(new HttpStatusServerEntryPoint(HttpStatus.FORBIDDEN)))
+                    .authenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED)))
                     .authenticationSuccessHandler(new WebFilterChainServerAuthenticationSuccessHandler())
                     .and()
                 .csrf()
@@ -51,12 +51,4 @@ public class CustomSecurityConfig {
         return new MapReactiveUserDetailsService(user);
     }
 
-//    @Bean
-//    public ServerAuthenticationSuccessHandler successHandler() {
-//        return (webFilterExchange, authentication) -> {
-//            return Mono.fromRunnable(() -> {
-//                webFilterExchange.getExchange()
-//            })
-//        }
-//    }
 }
