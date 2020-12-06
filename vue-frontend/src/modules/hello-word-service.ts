@@ -1,7 +1,7 @@
 import {Unauthorized} from "@/types/unauthorized";
 
 export class HelloWordService {
-    async getMessage(): Promise<{hello: string}> {
+    async getMessage(): Promise<{message: string}> {
         const response = await fetch('/api/hello')
         if (response.status === 401) {
             throw new Unauthorized('User is not authorized')

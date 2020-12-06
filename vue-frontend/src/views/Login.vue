@@ -56,7 +56,7 @@ export default class Login extends Vue {
   created() {
     const redirectFrom = this.$route.query.redirectFrom;
     if (redirectFrom) {
-      this.redirectFrom = redirectFrom
+      this.redirectFrom = redirectFrom.toString()
     }
   }
 }

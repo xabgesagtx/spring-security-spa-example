@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>The backend says hello to {{hello}}</h3>
+    <h3>The backend says: "{{hello}}"</h3>
   </div>
 
 </template>
