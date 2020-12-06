@@ -30,11 +30,11 @@
 
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
-import {UserInfoService} from "@/modules/user-info-service";
+import {LoginService} from "@/modules/login-service";
 
 @Component
 export default class Login extends Vue {
-  userInfoService = new UserInfoService()
+  loginService = new LoginService()
   username = ''
   password = ''
   redirectFrom = '/'
@@ -45,8 +45,8 @@ export default class Login extends Vue {
 
   async submit() {
     try {
-      const userInfo = await this.userInfoService.userInfo(this.username, this.password)
-      alert('Logged in as ' + userInfo.name)
+      const loginResponse = await this.loginService.login(this.username, this.password)
+      alert('Logged in as ' + loginResponse.username)
       await this.$router.push(this.redirectFrom)
     } catch (e) {
       alert('Failed to login: ' + e.message)

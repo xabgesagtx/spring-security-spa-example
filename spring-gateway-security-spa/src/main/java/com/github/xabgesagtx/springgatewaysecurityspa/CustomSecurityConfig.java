@@ -12,7 +12,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
-import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
+import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
+import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -22,9 +23,11 @@ public class CustomSecurityConfig {
     public SecurityWebFilterChain securitygWebFilterChain(
             ServerHttpSecurity http) {
         return http
-                .httpBasic()
+                .formLogin()
+                    .loginPage("/api/login")
                     .authenticationEntryPoint(new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED))
-                    .securityContextRepository(new WebSessionServerSecurityContextRepository())
+                    .authenticationFailureHandler(new ServerAuthenticationEntryPointFailureHandler(new HttpStatusServerEntryPoint(HttpStatus.FORBIDDEN)))
+                    .authenticationSuccessHandler(new WebFilterChainServerAuthenticationSuccessHandler())
                     .and()
                 .csrf()
                     .disable()
@@ -45,4 +48,13 @@ public class CustomSecurityConfig {
                 .build();
         return new MapReactiveUserDetailsService(user);
     }
+
+//    @Bean
+//    public ServerAuthenticationSuccessHandler successHandler() {
+//        return (webFilterExchange, authentication) -> {
+//            return Mono.fromRunnable(() -> {
+//                webFilterExchange.getExchange()
+//            })
+//        }
+//    }
 }
