@@ -14,13 +14,15 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.HttpStatusServerEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler;
 import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler;
+import org.springframework.session.data.mongo.config.annotation.web.reactive.EnableMongoWebSession;
 
 @Configuration
 @EnableWebFluxSecurity
+@EnableMongoWebSession(collectionName = "gateway-sessions")
 public class CustomSecurityConfig {
 
     @Bean
-    public SecurityWebFilterChain securitygWebFilterChain(
+    public SecurityWebFilterChain securityWebFilterChain(
             ServerHttpSecurity http) {
         return http
                 .formLogin()

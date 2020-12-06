@@ -11,3 +11,6 @@ spring:
             - Path=/api/hello
           filters:
             - SetPath=/hello
+  data:
+    mongodb:
+      database: sessiondb
